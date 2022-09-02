@@ -1,19 +1,14 @@
-class Insect:
-    def __init__(self, armor):
-        print("insect")
-        self.armor = armor
+def fast_overlap(s, t):
+    i, j, count = 0, 0, 0
 
-    def add_armor(self, amount):
-        self.armor += amount
-
-
-class Ant(Insect):
-    def __init__(self, name):
-        print("Ant")
-        Insect.__init__(self, 10)
-        self.name = name
+    while i < len(s) and j < len(t):
+        if s[i] == t[j]:
+            i, j, count = i + 1, j + 1, count + 1
+        elif s[i] < t[j]:
+            i += 1
+        else:
+            j += 1
+    return count
 
 
-class HarvesterAnt(Ant):
-    def say(self, words):
-        print(words)
+print(fast_overlap([3, 4, 6, 7, 9, 10], [1, 3, 5, 7, 8]))
