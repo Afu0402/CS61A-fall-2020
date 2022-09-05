@@ -78,11 +78,9 @@ def num_trees(n):
     429
 
     """
-    if n == 1 or n == 2:
+    if n == 1:
         return 1
-    if n == 0:
-        return 0
-    return num_trees(n - 1) * 2 + num_trees(n // 2)
+    return sum([num_trees(x) * num_trees(n - x) for x in range(1, n)])
 
 
 def make_generators_generator(g):
