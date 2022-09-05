@@ -22,14 +22,10 @@ def subseqs(s):
     [[]]
     """
     if not s:
-        return [s]
+        return [[]]
     else:
-        rest_all = [[x] for x in s[1:]]
-        if len(s) > 2:
-            rest_all += [s[1:]]
-        res = insert_into_all(s[0], rest_all) + [[s[0]]]
-
-        return res + subseqs(s[1:])
+        subset = subseqs(s[1:])
+        return insert_into_all(s[0], subset) + subset
 
 
 def inc_subseqs(s):
@@ -51,18 +47,15 @@ def inc_subseqs(s):
 
     def subseq_helper(s, prev):
         if not s:
-            return [s]
+            return [[]]
         elif s[0] < prev:
-            print("DEBUG", "hint")
-            return [[s[0]], [prev]] + subseq_helper(s[1:], s[0])
+            return subseq_helper(s[1:], prev)
         else:
-            a = [[x] for x in s]
-            if len(s) > 2:
-                a += [s[:]]
-            print("DEBUG", a)
-            return insert_into_all(prev, a) + subseq_helper(s[1:], s[0]) + [[prev]]
+            a = subseq_helper(s[1:], s[0])
+            b = subseq_helper(s[1:], prev)
+            return insert_into_all(s[0], a) + b
 
-    return subseq_helper(s[1:], s[0])
+    return subseq_helper(s, 0)
 
 
 def num_trees(n):
@@ -399,10 +392,10 @@ def make_to_string(front, mid, back, empty_repr):
     """
 
     def printer(lnk):
-        if ______________:
-            return _________________________
+        if lnk is Link.empty:
+            return empty_repr
         else:
-            return _________________________
+            return front + str(lnk.first) + mid + printer(lnk.rest) + back
 
     return printer
 
@@ -424,11 +417,12 @@ def prune_small(t, n):
     >>> t3
     Tree(6, [Tree(1), Tree(3, [Tree(1), Tree(2)])])
     """
-    while ___________________________:
-        largest = max(_______________, key=____________________)
-        _________________________
-    for __ in _____________:
-        ___________________
+    while not t.is_leaf() and len(t.branches) > n:
+        largest = max(t.branches, key=lambda b: b.label)
+        t.branches.remove(largest)
+        prune_small(t, n)
+    for b in t.branches:
+        prune_small(b, n)
 
 
 class Link:
