@@ -541,3 +541,19 @@ class Tree:
             return tree_str
 
         return print_tree(self).rstrip()
+
+
+s = Link(2, Link(3, Link(3, Link(4))))
+
+
+def filter_l(num, lnk):
+    if lnk is Link.empty:
+        return Link.empty
+    if lnk.first != num:
+
+        return Link(lnk.first, filter_l(num, lnk.rest))
+    else:
+        return filter_l(num, lnk.rest)
+
+
+print(filter_l(3, s))
