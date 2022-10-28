@@ -626,7 +626,7 @@ def run(*argv):
     parser.add_argument(
         "--turtle-save-path",
         default=None,
-        help="save the image to this location when done",
+        help="save the image to this location when g",
     )
     parser.add_argument(
         "-load", "-i", action="store_true", help="run file interactively"
